@@ -117,24 +117,24 @@ Response Body: {
 #### Enhanced GET
 ```go
 resp, err := resty.R().
-      SetQueryParams(map[string]string{
-          "page_no": "1",
-          "limit": "20",
-          "sort":"name",
-          "order": "asc",
-          "random":strconv.FormatInt(time.Now().Unix(), 10),
-      }).
-      SetHeader("Accept", "application/json").
-      SetAuthToken("BC594900518B4F7EAC75BD37F019E08FBC594900518B4F7EAC75BD37F019E08F").
-      Get("/search_result")
+  SetQueryParams(map[string]string{
+    "page_no": "1",
+    "limit": "20",
+    "sort":"name",
+    "order": "asc",
+    "random":strconv.FormatInt(time.Now().Unix(), 10),
+  }).
+  SetHeader("Accept", "application/json").
+  SetAuthToken("BC594900518B4F7EAC75BD37F019E08FBC594900518B4F7EAC75BD37F019E08F").
+  Get("/search_result")
 
 
 // Sample of using Request.SetQueryString method
 resp, err := resty.R().
-      SetQueryString("productId=232&template=fresh-sample&cat=resty&source=google&kw=buy a lot more").
-      SetHeader("Accept", "application/json").
-      SetAuthToken("BC594900518B4F7EAC75BD37F019E08FBC594900518B4F7EAC75BD37F019E08F").
-      Get("/show_product")
+  SetQueryString("productId=232&template=fresh-sample&cat=resty&source=google&kw=buy a lot more").
+  SetHeader("Accept", "application/json").
+  SetAuthToken("BC594900518B4F7EAC75BD37F019E08FBC594900518B4F7EAC75BD37F019E08F").
+  Get("/show_product")
 ```
 
 #### Various POST method combinations
@@ -142,43 +142,43 @@ resp, err := resty.R().
 // POST JSON string
 // No need to set content type, if you have client level setting
 resp, err := resty.R().
-      SetHeader("Content-Type", "application/json").
-      SetBody(`{"username":"testuser", "password":"testpass"}`).
-      SetResult(&AuthSuccess{}).    // or SetResult(AuthSuccess{}).
-      Post("https://myapp.com/login")
+  SetHeader("Content-Type", "application/json").
+  SetBody(`{"username":"testuser", "password":"testpass"}`).
+  SetResult(&AuthSuccess{}).    // or SetResult(AuthSuccess{}).
+  Post("https://myapp.com/login")
 
 // POST []byte array
 // No need to set content type, if you have client level setting
 resp, err := resty.R().
-      SetHeader("Content-Type", "application/json").
-      SetBody([]byte(`{"username":"testuser", "password":"testpass"}`)).
-      SetResult(&AuthSuccess{}).    // or SetResult(AuthSuccess{}).
-      Post("https://myapp.com/login")
+  SetHeader("Content-Type", "application/json").
+  SetBody([]byte(`{"username":"testuser", "password":"testpass"}`)).
+  SetResult(&AuthSuccess{}).    // or SetResult(AuthSuccess{}).
+  Post("https://myapp.com/login")
 
 // POST Struct, default is JSON content type. No need to set one
 resp, err := resty.R().
-      SetBody(User{Username: "testuser", Password: "testpass"}).
-      SetResult(&AuthSuccess{}).    // or SetResult(AuthSuccess{}).
-      SetError(&AuthError{}).       // or SetError(AuthError{}).
-      Post("https://myapp.com/login")
+  SetBody(User{Username: "testuser", Password: "testpass"}).
+  SetResult(&AuthSuccess{}).    // or SetResult(AuthSuccess{}).
+  SetError(&AuthError{}).       // or SetError(AuthError{}).
+  Post("https://myapp.com/login")
 
 // POST Map, default is JSON content type. No need to set one
 resp, err := resty.R().
-      SetBody(map[string]interface{}{"username": "testuser", "password": "testpass"}).
-      SetResult(&AuthSuccess{}).    // or SetResult(AuthSuccess{}).
-      SetError(&AuthError{}).       // or SetError(AuthError{}).
-      Post("https://myapp.com/login")
+  SetBody(map[string]interface{}{"username": "testuser", "password": "testpass"}).
+  SetResult(&AuthSuccess{}).    // or SetResult(AuthSuccess{}).
+  SetError(&AuthError{}).       // or SetError(AuthError{}).
+  Post("https://myapp.com/login")
 
 // POST of raw bytes for file upload. For example: upload file to Dropbox
 fileBytes, _ := ioutil.ReadFile("/Users/jeeva/mydocument.pdf")
 
 // See we are not setting content-type header, since go-resty automatically detects Content-Type for you
 resp, err := resty.R().
-      SetBody(fileBytes).
-      SetContentLength(true).          // Dropbox expects this value
-      SetAuthToken("<your-auth-token>").
-      SetError(&DropboxError{}).       // or SetError(DropboxError{}).
-      Post("https://content.dropboxapi.com/1/files_put/auto/resty/mydocument.pdf") // for upload Dropbox supports PUT too
+  SetBody(fileBytes).
+  SetContentLength(true).          // Dropbox expects this value
+  SetAuthToken("<your-auth-token>").
+  SetError(&DropboxError{}).       // or SetError(DropboxError{}).
+  Post("https://content.dropboxapi.com/1/files_put/auto/resty/mydocument.pdf") // for upload Dropbox supports PUT too
 
 // Note: resty detects Content-Type for request body/payload if content type header is not set.
 //   * For struct and map data type defaults to 'application/json'
@@ -193,15 +193,15 @@ You can use various combinations of `PUT` method call like demonstrated for `POS
 // Request goes as JSON content type
 // No need to set auth token, error, if you have client level settings
 resp, err := resty.R().
-      SetBody(Article{
-        Title: "go-resty",
-        Content: "This is my article content, oh ya!",
-        Author: "Jeevanandam M",
-        Tags: []string{"article", "sample", "resty"},
-      }).
-      SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
-      SetError(&Error{}).       // or SetError(Error{}).
-      Put("https://myapp.com/article/1234")
+  SetBody(Article{
+    Title: "go-resty",
+    Content: "This is my article content, oh ya!",
+    Author: "Jeevanandam M",
+    Tags: []string{"article", "sample", "resty"},
+  }).
+  SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
+  SetError(&Error{}).       // or SetError(Error{}).
+  Put("https://myapp.com/article/1234")
 ```
 
 #### Sample PATCH
@@ -212,12 +212,12 @@ You can use various combinations of `PATCH` method call like demonstrated for `P
 // Request goes as JSON content type
 // No need to set auth token, error, if you have client level settings
 resp, err := resty.R().
-      SetBody(Article{
-        Tags: []string{"new tag1", "new tag2"},
-      }).
-      SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
-      SetError(&Error{}).       // or SetError(Error{}).
-      Patch("https://myapp.com/articles/1234")
+  SetBody(Article{
+    Tags: []string{"new tag1", "new tag2"},
+  }).
+  SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
+  SetError(&Error{}).       // or SetError(Error{}).
+  Patch("https://myapp.com/articles/1234")
 ```
 
 #### Sample DELETE, HEAD, OPTIONS
@@ -225,30 +225,30 @@ resp, err := resty.R().
 // DELETE a article
 // No need to set auth token, error, if you have client level settings
 resp, err := resty.R().
-      SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
-      SetError(&Error{}).       // or SetError(Error{}).
-      Delete("https://myapp.com/articles/1234")
+  SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
+  SetError(&Error{}).       // or SetError(Error{}).
+  Delete("https://myapp.com/articles/1234")
 
 // DELETE a articles with payload/body as a JSON string
 // No need to set auth token, error, if you have client level settings
 resp, err := resty.R().
-      SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
-      SetError(&Error{}).       // or SetError(Error{}).
-      SetHeader("Content-Type", "application/json").
-      SetBody(`{article_ids: [1002, 1006, 1007, 87683, 45432] }`).
-      Delete("https://myapp.com/articles")
+  SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
+  SetError(&Error{}).       // or SetError(Error{}).
+  SetHeader("Content-Type", "application/json").
+  SetBody(`{article_ids: [1002, 1006, 1007, 87683, 45432] }`).
+  Delete("https://myapp.com/articles")
 
 // HEAD of resource
 // No need to set auth token, if you have client level settings
 resp, err := resty.R().
-      SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
-      Head("https://myapp.com/videos/hi-res-video")
+  SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
+  Head("https://myapp.com/videos/hi-res-video")
 
 // OPTIONS of resource
 // No need to set auth token, if you have client level settings
 resp, err := resty.R().
-      SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
-      Options("https://myapp.com/servers/nyc-dc-01")
+  SetAuthToken("C6A79608-782F-4ED0-A11D-BD82FAD829CD").
+  Options("https://myapp.com/servers/nyc-dc-01")
 ```
 
 ### Multipart File(s) upload
@@ -258,44 +258,44 @@ profileImgBytes, _ := ioutil.ReadFile("/Users/jeeva/test-img.png")
 notesBytes, _ := ioutil.ReadFile("/Users/jeeva/text-file.txt")
 
 resp, err := dclr().
-      SetFileReader("profile_img", "test-img.png", bytes.NewReader(profileImgBytes)).
-      SetFileReader("notes", "text-file.txt", bytes.NewReader(notesBytes)).
-      SetFormData(map[string]string{
-          "first_name": "Jeevanandam",
-          "last_name": "M",
-      }).
-      Post(t"http://myapp.com/upload")
+  SetFileReader("profile_img", "test-img.png", bytes.NewReader(profileImgBytes)).
+  SetFileReader("notes", "text-file.txt", bytes.NewReader(notesBytes)).
+  SetFormData(map[string]string{
+    "first_name": "Jeevanandam",
+    "last_name": "M",
+  }).
+  Post("http://myapp.com/upload")
 ```
 
 #### Using File directly from Path
 ```go
 // Single file scenario
 resp, err := resty.R().
-      SetFile("profile_img", "/Users/jeeva/test-img.png").
-      Post("http://myapp.com/upload")
+  SetFile("profile_img", "/Users/jeeva/test-img.png").
+  Post("http://myapp.com/upload")
 
 // Multiple files scenario
 resp, err := resty.R().
-      SetFiles(map[string]string{
-        "profile_img": "/Users/jeeva/test-img.png",
-        "notes": "/Users/jeeva/text-file.txt",
-      }).
-      Post("http://myapp.com/upload")
+  SetFiles(map[string]string{
+    "profile_img": "/Users/jeeva/test-img.png",
+    "notes": "/Users/jeeva/text-file.txt",
+  }).
+  Post("http://myapp.com/upload")
 
 // Multipart of form fields and files
 resp, err := resty.R().
-      SetFiles(map[string]string{
-        "profile_img": "/Users/jeeva/test-img.png",
-        "notes": "/Users/jeeva/text-file.txt",
-      }).
-      SetFormData(map[string]string{
-        "first_name": "Jeevanandam",
-        "last_name": "M",
-        "zip_code": "00001",
-        "city": "my city",
-        "access_token": "C6A79608-782F-4ED0-A11D-BD82FAD829CD",
-      }).
-      Post("http://myapp.com/profile")
+  SetFiles(map[string]string{
+    "profile_img": "/Users/jeeva/test-img.png",
+    "notes": "/Users/jeeva/text-file.txt",
+  }).
+  SetFormData(map[string]string{
+    "first_name": "Jeevanandam",
+    "last_name": "M",
+    "zip_code": "00001",
+    "city": "my city",
+    "access_token": "C6A79608-782F-4ED0-A11D-BD82FAD829CD",
+  }).
+  Post("http://myapp.com/profile")
 ```
 
 #### Sample Form submision
@@ -303,29 +303,29 @@ resp, err := resty.R().
 // just mentioning about POST as an example with simple flow
 // User Login
 resp, err := resty.R().
-      SetFormData(map[string]string{
-        "username": "jeeva",
-        "password": "mypass",
-      }).
-      Post("http://myapp.com/login")
+  SetFormData(map[string]string{
+    "username": "jeeva",
+    "password": "mypass",
+  }).
+  Post("http://myapp.com/login")
 
 // Followed by profile update
 resp, err := resty.R().
-      SetFormData(map[string]string{
-        "first_name": "Jeevanandam",
-        "last_name": "M",
-        "zip_code": "00001",
-        "city": "new city update",
-      }).
-      Post("http://myapp.com/profile")
+  SetFormData(map[string]string{
+    "first_name": "Jeevanandam",
+    "last_name": "M",
+    "zip_code": "00001",
+    "city": "new city update",
+  }).
+  Post("http://myapp.com/profile")
 
 // Multi value form data
 criteria := url.Values{
   "search_criteria": []string{"book", "glass", "pencil"},
 }
 resp, err := resty.R().
-      SetMultiValueFormData(criteria).
-      Post("http://myapp.com/search")
+  SetMultiValueFormData(criteria).
+  Post("http://myapp.com/search")
 ```
 
 #### Save HTTP Response into File
@@ -337,14 +337,14 @@ resty.SetOutputDirectory("/Users/jeeva/Downloads")
 
 // HTTP response gets saved into file, similar to curl -o flag
 _, err := resty.R().
-          SetOutput("plugin/ReplyWithHeader-v5.1-beta.zip").
-          Get("http://bit.ly/1LouEKr")
+  SetOutput("plugin/ReplyWithHeader-v5.1-beta.zip").
+  Get("http://bit.ly/1LouEKr")
 
 // OR using absolute path
 // Note: output directory path is not used for absoulte path
 _, err := resty.R().
-          SetOutput("/MyDownloads/plugin/ReplyWithHeader-v5.1-beta.zip").
-          Get("http://bit.ly/1LouEKr")
+  SetOutput("/MyDownloads/plugin/ReplyWithHeader-v5.1-beta.zip").
+  Get("http://bit.ly/1LouEKr")
 ```
 
 #### Request and Response Middleware
@@ -352,19 +352,19 @@ Resty provides middleware ability to manipulate for Request and Response. It is 
 ```go
 // Registering Request Middleware
 resty.OnBeforeRequest(func(c *resty.Client, req *resty.Request) error {
-    // Now you have access to Client and current Request object
-    // manipulate it as per your need
+  // Now you have access to Client and current Request object
+  // manipulate it as per your need
 
-    return nil  // if its success otherwise return error
-  })
+  return nil  // if its success otherwise return error
+})
 
 // Registering Response Middleware
 resty.OnAfterResponse(func(c *resty.Client, resp *resty.Response) error {
-    // Now you have access to Client and current Response object
-    // manipulate it as per your need
+  // Now you have access to Client and current Response object
+  // manipulate it as per your need
 
-    return nil  // if its success otherwise return error
-  })
+  return nil  // if its success otherwise return error
+})
 ```
 
 #### Redirect Policy
@@ -444,8 +444,8 @@ resty.RemoveProxy()
 ```go
 // Set proxy for current request
 resp, err := c.R().
-    SetProxy("http://sampleproxy:8888").
-    Get("http://httpbin.org/get")
+  SetProxy("http://sampleproxy:8888").
+  Get("http://httpbin.org/get")
 ```
 
 #### Choose REST or HTTP mode
@@ -503,34 +503,34 @@ resty.SetHostURL("http://httpbin.org")
 // Headers for all request
 resty.SetHeader("Accept", "application/json")
 resty.SetHeaders(map[string]string{
-        "Content-Type": "application/json",
-        "User-Agent": "My custom User Agent String",
-      })
+  "Content-Type": "application/json",
+  "User-Agent": "My custom User Agent String",
+})
 
 // Cookies for all request
 resty.SetCookie(&http.Cookie{
-      Name:"go-resty",
-      Value:"This is cookie value",
-      Path: "/",
-      Domain: "sample.com",
-      MaxAge: 36000,
-      HttpOnly: true,
-      Secure: false,
-    })
+  Name:"go-resty",
+  Value:"This is cookie value",
+  Path: "/",
+  Domain: "sample.com",
+  MaxAge: 36000,
+  HttpOnly: true,
+  Secure: false,
+})
 resty.SetCookies(cookies)
 
 // URL query parameters for all request
 resty.SetQueryParam("user_id", "00001")
 resty.SetQueryParams(map[string]string{ // sample of those who use this manner
-      "api_key": "api-key-here",
-      "api_secert": "api-secert",
-    })
+  "api_key": "api-key-here",
+  "api_secert": "api-secert",
+})
 resty.R().SetQueryString("productId=232&template=fresh-sample&cat=resty&source=google&kw=buy a lot more")
 
 // Form data for all request. Typically used with POST and PUT
 resty.SetFormData(map[string]string{
-    "access_token": "BC594900-518B-4F7E-AC75-BD37F019E08F",
-  })
+  "access_token": "BC594900-518B-4F7E-AC75-BD37F019E08F",
+})
 
 // Basic Auth for all request
 resty.SetBasicAuth("myuser", "mypass")
@@ -552,9 +552,9 @@ unixSocket := "unix:///var/run/my_socket.sock"
 
 // Create a Go's http.Transport so we can set it in resty.
 transport := http.Transport{
-	Dial: func(_, _ string) (net.Conn, error) {
-		return net.Dial("unix", unixSocket)
-	},
+  Dial: func(_, _ string) (net.Conn, error) {
+    return net.Dial("unix", unixSocket)
+  },
 }
 
 // Set the previous transport that we created, set the scheme of the communication to the
